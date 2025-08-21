@@ -7,7 +7,7 @@ describe('Encounter Mock Responses', () => {
   });
 
   it('should have proper structure for each encounter response', () => {
-    encounterMockResponses.forEach(response => {
+    encounterMockResponses.forEach((response) => {
       expect(response).toHaveProperty('id');
       expect(response).toHaveProperty('difficulty');
       expect(response).toHaveProperty('partyLevel');
@@ -16,7 +16,7 @@ describe('Encounter Mock Responses', () => {
   });
 
   it('should contain encounter details in responses', () => {
-    encounterMockResponses.forEach(response => {
+    encounterMockResponses.forEach((response) => {
       const text = response.response.toLowerCase();
       // Should contain enemies, terrain, and tactics
       expect(text).toContain('enemies');

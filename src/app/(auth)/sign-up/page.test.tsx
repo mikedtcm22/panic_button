@@ -17,7 +17,7 @@ jest.mock('@clerk/nextjs', () => ({
 describe('Sign Up Page', () => {
   it('should render email and password input fields', () => {
     render(<SignUpPage />);
-    
+
     expect(screen.getByLabelText(/email/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/password/i)).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /sign up/i })).toBeInTheDocument();
@@ -25,14 +25,14 @@ describe('Sign Up Page', () => {
 
   it('should render SignUp component from Clerk', () => {
     render(<SignUpPage />);
-    
+
     expect(screen.getByTestId('clerk-signup')).toBeInTheDocument();
   });
 
   it('should center the sign-up form on the page', () => {
     const { container } = render(<SignUpPage />);
     const wrapper = container.firstChild as HTMLElement;
-    
+
     expect(wrapper.className).toContain('flex');
     expect(wrapper.className).toContain('justify-center');
     expect(wrapper.className).toContain('items-center');

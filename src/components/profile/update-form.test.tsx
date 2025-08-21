@@ -22,7 +22,7 @@ describe('Profile Update Form', () => {
 
   it('should display current user first name', () => {
     render(<ProfileUpdateForm />);
-    
+
     const input = screen.getByLabelText(/first name/i) as HTMLInputElement;
     expect(input.value).toBe('John');
   });
@@ -30,16 +30,16 @@ describe('Profile Update Form', () => {
   it('should update user profile on form submission', async () => {
     const user = userEvent.setup();
     render(<ProfileUpdateForm />);
-    
+
     const nameInput = screen.getByLabelText(/first name/i);
     await user.clear(nameInput);
     await user.type(nameInput, 'Jane');
-    
+
     await user.click(screen.getByRole('button', { name: /save/i }));
-    
+
     await waitFor(() => {
       expect(mockUpdate).toHaveBeenCalledWith({
-        firstName: 'Jane'
+        firstName: 'Jane',
       });
     });
   });
@@ -47,15 +47,15 @@ describe('Profile Update Form', () => {
   it('should handle empty first name', async () => {
     const user = userEvent.setup();
     render(<ProfileUpdateForm />);
-    
+
     const nameInput = screen.getByLabelText(/first name/i);
     await user.clear(nameInput);
-    
+
     await user.click(screen.getByRole('button', { name: /save/i }));
-    
+
     await waitFor(() => {
       expect(mockUpdate).toHaveBeenCalledWith({
-        firstName: ''
+        firstName: '',
       });
     });
   });
@@ -63,17 +63,17 @@ describe('Profile Update Form', () => {
   it('should maintain form state during input', async () => {
     const user = userEvent.setup();
     render(<ProfileUpdateForm />);
-    
+
     const nameInput = screen.getByLabelText(/first name/i) as HTMLInputElement;
     await user.clear(nameInput);
     await user.type(nameInput, 'Alice');
-    
+
     expect(nameInput.value).toBe('Alice');
   });
 
   it('should show save button', () => {
     render(<ProfileUpdateForm />);
-    
+
     expect(screen.getByRole('button', { name: /save/i })).toBeInTheDocument();
   });
 });

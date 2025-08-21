@@ -27,7 +27,7 @@ export const encounterMockResponses: EncounterMockResponse[] = [
 - Captain orders the dogs to flank while bandits provide crossbow cover
 - If reduced to half health, Captain attempts to flee through hidden tunnel behind false crate
 
-*Treasure:* 150 gp in stolen goods, Captain's signet ring (identifies local thieves' guild)`
+*Treasure:* 150 gp in stolen goods, Captain's signet ring (identifies local thieves' guild)`,
   },
   {
     id: 'encounter-2',
@@ -48,16 +48,16 @@ export const encounterMockResponses: EncounterMockResponse[] = [
 - They target the party's shiniest objects with minor illusions to make them appear as snakes
 - If befriended (DC 15 Persuasion), they reveal the location of a hidden treasure cache
 
-*Non-Combat Resolution:* Offering sweets or performing for the pixies (DC 12 Performance) ends the encounter peacefully`
-  }
+*Non-Combat Resolution:* Offering sweets or performing for the pixies (DC 12 Performance) ends the encounter peacefully`,
+  },
 ];
 
 export function getEncounterResponse(difficulty?: string): EncounterMockResponse {
   if (difficulty) {
-    const match = encounterMockResponses.find(r => r.difficulty === difficulty);
+    const match = encounterMockResponses.find((r) => r.difficulty === difficulty);
     if (match) return match;
   }
-  
+
   const randomIndex = Math.floor(Math.random() * encounterMockResponses.length);
   return encounterMockResponses[randomIndex];
 }

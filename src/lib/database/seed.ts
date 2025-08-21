@@ -7,7 +7,7 @@ export async function seedDatabase() {
     console.log('Database already seeded');
     return;
   }
-  
+
   // Create test users
   const testUser = await prisma.user.create({
     data: {
@@ -15,7 +15,7 @@ export async function seedDatabase() {
       clerkId: 'clerk_test_dm',
     },
   });
-  
+
   // Create test campaign
   const campaign = await prisma.campaign.create({
     data: {
@@ -24,7 +24,7 @@ export async function seedDatabase() {
       userId: testUser.id,
     },
   });
-  
+
   // Create test file
   await prisma.file.create({
     data: {
@@ -36,7 +36,7 @@ export async function seedDatabase() {
       campaignId: campaign.id,
     },
   });
-  
+
   console.log('Database seeded successfully');
 }
 

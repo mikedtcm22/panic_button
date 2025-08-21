@@ -14,14 +14,14 @@ const navItems = [
 
 export function Sidebar({ activeRoute }: SidebarProps) {
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
-      <nav className="p-4 space-y-2">
+    <aside className="min-h-screen w-64 border-r border-gray-200 bg-white">
+      <nav className="space-y-2 p-4">
         {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             className={cn(
-              'flex items-center space-x-3 px-3 py-2 rounded-lg transition-colors',
+              'flex items-center space-x-3 rounded-lg px-3 py-2 transition-colors',
               activeRoute === item.href
                 ? 'bg-gray-100 text-gray-900'
                 : 'text-gray-700 hover:bg-gray-50'

@@ -10,7 +10,7 @@ module.exports = {
       colors: {
         'panic-red': '#dc2626',
         'dm-purple': '#7c3aed',
-        'parchment': '#f5e6d3',
+        parchment: '#f5e6d3',
         'ink-black': '#1a1a1a',
       },
       animation: {

@@ -21,66 +21,66 @@ describe('Protected Route Component', () => {
   });
 
   it('should render children when user is authenticated', () => {
-    mockUseAuth.mockReturnValue({ 
+    mockUseAuth.mockReturnValue({
       userId: 'user_123',
-      isLoaded: true 
+      isLoaded: true,
     });
-    
+
     render(
       <ProtectedRoute>
         <div>Protected Content</div>
       </ProtectedRoute>
     );
-    
+
     expect(screen.getByText('Protected Content')).toBeInTheDocument();
     expect(mockPush).not.toHaveBeenCalled();
   });
-  
+
   it('should redirect to sign-in when user is not authenticated', () => {
-    mockUseAuth.mockReturnValue({ 
+    mockUseAuth.mockReturnValue({
       userId: null,
-      isLoaded: true 
+      isLoaded: true,
     });
-    
+
     render(
       <ProtectedRoute>
         <div>Protected Content</div>
       </ProtectedRoute>
     );
-    
+
     expect(mockPush).toHaveBeenCalledWith('/sign-in');
     expect(screen.queryByText('Protected Content')).not.toBeInTheDocument();
   });
 
   it('should show loading state while auth is loading', () => {
-    mockUseAuth.mockReturnValue({ 
+    mockUseAuth.mockReturnValue({
       userId: null,
-      isLoaded: false 
+      isLoaded: false,
     });
-    
+
     render(
       <ProtectedRoute>
         <div>Protected Content</div>
       </ProtectedRoute>
     );
-    
+
     expect(screen.getByText('Loading...')).toBeInTheDocument();
     expect(screen.queryByText('Protected Content')).not.toBeInTheDocument();
     expect(mockPush).not.toHaveBeenCalled();
   });
 
   it('should not redirect when auth is still loading', () => {
-    mockUseAuth.mockReturnValue({ 
+    mockUseAuth.mockReturnValue({
       userId: null,
-      isLoaded: false 
+      isLoaded: false,
     });
-    
+
     render(
       <ProtectedRoute>
         <div>Protected Content</div>
       </ProtectedRoute>
     );
-    
+
     expect(mockPush).not.toHaveBeenCalled();
   });
 });

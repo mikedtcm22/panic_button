@@ -20,10 +20,10 @@ describe('Profile Page', () => {
       emailAddresses: [{ emailAddress: 'test@example.com' }],
       firstName: 'John',
     });
-    
+
     const Component = await ProfilePage();
     const { container } = render(Component);
-    
+
     expect(screen.getByText('test@example.com')).toBeInTheDocument();
     expect(screen.getByText('John')).toBeInTheDocument();
   });
@@ -33,10 +33,10 @@ describe('Profile Page', () => {
       emailAddresses: [{ emailAddress: 'test@example.com' }],
       firstName: 'John',
     });
-    
+
     const Component = await ProfilePage();
     render(Component);
-    
+
     expect(screen.getByText('Profile')).toBeInTheDocument();
   });
 
@@ -45,20 +45,20 @@ describe('Profile Page', () => {
       emailAddresses: [{ emailAddress: 'test@example.com' }],
       firstName: null,
     });
-    
+
     const Component = await ProfilePage();
     render(Component);
-    
+
     expect(screen.getByText('test@example.com')).toBeInTheDocument();
     expect(screen.queryByText('null')).not.toBeInTheDocument();
   });
 
   it('should display not authenticated message when no user', async () => {
     mockCurrentUser.mockResolvedValue(null);
-    
+
     const Component = await ProfilePage();
     render(Component);
-    
+
     expect(screen.getByText('Not authenticated')).toBeInTheDocument();
   });
 });

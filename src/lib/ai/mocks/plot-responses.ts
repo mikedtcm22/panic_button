@@ -15,7 +15,7 @@ The NPC the party was supposed to meet has been arrested on fabricated charges b
 - Gather evidence of innocence from three witnesses
 - Decide whether to break them out or prove innocence legally
 
-*Complication:* The real criminal is blackmailing one of the party member's contacts, creating a moral dilemma between justice and loyalty.`
+*Complication:* The real criminal is blackmailing one of the party member's contacts, creating a moral dilemma between justice and loyalty.`,
   },
   {
     id: 'plot-2',
@@ -28,8 +28,8 @@ The quest giver reveals they've been working for the enemy all along, but claims
 - Both factions now consider the party untrustworthy
 - A third, neutral party offers sanctuary in exchange for information
 
-*Choice Point:* Trust the triple agent and help expose both factions, or turn them in to regain standing with one side.`
-  }
+*Choice Point:* Trust the triple agent and help expose both factions, or turn them in to regain standing with one side.`,
+  },
 ];
 
 export function getPlotResponse(): PlotMockResponse {

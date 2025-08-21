@@ -15,10 +15,10 @@ interface UploadItem {
 export function UploadManager() {
   const [uploads, setUploads] = useState<Map<string, UploadItem>>(new Map());
   const { uploadFile } = useFileUpload();
-  
+
   const handleFilesSelected = async (files: File[]) => {
     const newUploads = new Map(uploads);
-    
+
     for (const file of files) {
       const id = `${file.name}-${Date.now()}`;
       newUploads.set(id, {
@@ -27,9 +27,9 @@ export function UploadManager() {
         status: 'pending',
       });
     }
-    
+
     setUploads(newUploads);
-    
+
     // Process uploads
     for (const [id, item] of newUploads) {
       if (item.status === 'pending') {
@@ -37,18 +37,18 @@ export function UploadManager() {
       }
     }
   };
-  
+
   const processUpload = async (id: string, file: File) => {
-    setUploads(prev => {
+    setUploads((prev) => {
       const updated = new Map(prev);
       updated.set(id, { ...updated.get(id)!, status: 'uploading', progress: 0 });
       return updated;
     });
-    
+
     try {
       // Track progress
       const progressInterval = setInterval(() => {
-        setUploads(prev => {
+        setUploads((prev) => {
           const updated = new Map(prev);
           const item = updated.get(id);
           if (item && item.progress < 90) {
@@ -59,18 +59,18 @@ export function UploadManager() {
           return updated;
         });
       }, 200);
-      
+
       await uploadFile(file);
-      
+
       clearInterval(progressInterval);
-      
-      setUploads(prev => {
+
+      setUploads((prev) => {
         const updated = new Map(prev);
         updated.set(id, { ...updated.get(id)!, status: 'complete', progress: 100 });
         return updated;
       });
     } catch (error) {
-      setUploads(prev => {
+      setUploads((prev) => {
         const updated = new Map(prev);
         updated.set(id, {
           ...updated.get(id)!,
@@ -81,18 +81,18 @@ export function UploadManager() {
       });
     }
   };
-  
+
   const handleRetry = (id: string) => {
     const item = uploads.get(id);
     if (item) {
       processUpload(id, item.file);
     }
   };
-  
+
   return (
     <div>
       <FileDropzone onFilesSelected={handleFilesSelected} />
-      
+
       <div className="mt-4 space-y-2">
         {Array.from(uploads.entries()).map(([id, item]) => (
           <div key={id}>
@@ -100,10 +100,7 @@ export function UploadManager() {
             {item.status === 'error' && (
               <div className="mt-2 text-red-600">
                 <span>{item.error}</span>
-                <button
-                  onClick={() => handleRetry(id)}
-                  className="ml-2 underline"
-                >
+                <button onClick={() => handleRetry(id)} className="ml-2 underline">
                   Retry
                 </button>
               </div>

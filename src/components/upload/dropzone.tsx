@@ -10,7 +10,7 @@ interface FileDropzoneProps {
 
 export function FileDropzone({ onFilesSelected, onError }: FileDropzoneProps) {
   const maxFileSize = 10 * 1024 * 1024; // 10MB
-  
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       'application/pdf': ['.pdf'],
@@ -21,7 +21,7 @@ export function FileDropzone({ onFilesSelected, onError }: FileDropzoneProps) {
     maxSize: maxFileSize,
     onDrop: (acceptedFiles, rejectedFiles) => {
       if (rejectedFiles.length > 0) {
-        rejectedFiles.forEach(rejection => {
+        rejectedFiles.forEach((rejection) => {
           if (rejection.errors[0]?.code === 'file-too-large') {
             onError?.('File size exceeds 10MB limit');
           } else {
@@ -30,13 +30,13 @@ export function FileDropzone({ onFilesSelected, onError }: FileDropzoneProps) {
         });
         return;
       }
-      
+
       if (acceptedFiles.length > 0) {
         onFilesSelected(acceptedFiles);
       }
     },
   });
-  
+
   return (
     <div {...getRootProps()} data-testid="dropzone" className="border-2 border-dashed p-8">
       <input {...getInputProps()} data-testid="file-input" accept=".pdf,.docx,.md,.txt" />

@@ -7,7 +7,7 @@ describe('NPC Mock Responses', () => {
   });
 
   it('should have proper structure for each NPC response', () => {
-    npcMockResponses.forEach(response => {
+    npcMockResponses.forEach((response) => {
       expect(response).toHaveProperty('id');
       expect(response).toHaveProperty('context');
       expect(response).toHaveProperty('response');
@@ -18,7 +18,7 @@ describe('NPC Mock Responses', () => {
   });
 
   it('should contain detailed NPC information in responses', () => {
-    npcMockResponses.forEach(response => {
+    npcMockResponses.forEach((response) => {
       const text = response.response.toLowerCase();
       // Should contain appearance, personality, motivation, and quest hook
       expect(text).toContain('appearance');

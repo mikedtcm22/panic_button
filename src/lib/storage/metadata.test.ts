@@ -13,7 +13,7 @@ describe('File Metadata Storage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  
+
   it('should save file metadata to database', async () => {
     const mockFile = {
       id: 'file_123',
@@ -24,10 +24,10 @@ describe('File Metadata Storage', () => {
       storageKey: 'user_123/campaigns/abc/test.pdf',
       createdAt: new Date(),
     };
-    
+
     const database = require('@/lib/database');
     database.prisma.file.create.mockResolvedValue(mockFile);
-    
+
     const metadata = await saveFileMetadata({
       userId: 'user_123',
       fileName: 'test.pdf',
@@ -35,13 +35,13 @@ describe('File Metadata Storage', () => {
       fileSize: 1024,
       storageKey: 'user_123/campaigns/abc/test.pdf',
     });
-    
+
     expect(metadata.id).toBe('file_123');
     expect(database.prisma.file.create).toHaveBeenCalledWith({
       data: expect.objectContaining({
         userId: 'user_123',
         fileName: 'test.pdf',
-      })
+      }),
     });
   });
 });

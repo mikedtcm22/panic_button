@@ -8,7 +8,7 @@ import { generateMockResponse } from '@/lib/ai/mock-service';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    
+
     // Check if we're in mock mode
     if (isInMockMode()) {
       const content = await generateMockResponse(body.type, body.context);
@@ -17,24 +17,21 @@ export async function POST(request: NextRequest) {
         usage: {
           prompt_tokens: 100,
           completion_tokens: 150,
-          total_tokens: 250
+          total_tokens: 250,
         },
-        mock: true // Indicate this is mock data
+        mock: true, // Indicate this is mock data
       });
     }
-    
+
     // Validate request for real API calls
     const validation = validateGenerateRequest(body);
     if (!validation.valid) {
-      return NextResponse.json(
-        { message: validation.error },
-        { status: 400 }
-      );
+      return NextResponse.json({ message: validation.error }, { status: 400 });
     }
-    
+
     const prompt = body.prompt || generatePanicPrompt(body.type, body.context || {});
     const response = await generateText(prompt);
-    
+
     return NextResponse.json({
       content: response.choices[0]?.message?.content || '',
       usage: response.usage,

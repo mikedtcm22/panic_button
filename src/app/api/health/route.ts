@@ -3,7 +3,7 @@ import { checkEnvironment } from '@/lib/config/env-check';
 
 export async function GET() {
   const config = checkEnvironment();
-  
+
   // Test database connection
   let databaseHealthy = false;
   try {
@@ -12,7 +12,7 @@ export async function GET() {
   } catch (error) {
     databaseHealthy = false;
   }
-  
+
   const health = {
     status: 'ok',
     timestamp: new Date().toISOString(),
@@ -29,8 +29,8 @@ export async function GET() {
       openai: config.openai.message,
       storage: config.r2.message,
       database: config.database.message,
-    }
+    },
   };
-  
+
   return NextResponse.json(health);
 }

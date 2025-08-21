@@ -6,12 +6,12 @@ import { useState } from 'react';
 export function ProfileUpdateForm() {
   const { user, update } = useUser();
   const [firstName, setFirstName] = useState(user?.firstName || '');
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await update({ firstName });
   };
-  
+
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
@@ -25,9 +25,9 @@ export function ProfileUpdateForm() {
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
         />
       </div>
-      <button 
+      <button
         type="submit"
-        className="py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md"
+        className="rounded-md bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
       >
         Save
       </button>

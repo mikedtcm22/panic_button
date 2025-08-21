@@ -7,7 +7,7 @@ describe('Foreshadow Mock Responses', () => {
   });
 
   it('should have proper structure for each foreshadow response', () => {
-    foreshadowMockResponses.forEach(response => {
+    foreshadowMockResponses.forEach((response) => {
       expect(response).toHaveProperty('id');
       expect(response).toHaveProperty('response');
       expect(typeof response.id).toBe('string');
@@ -16,7 +16,7 @@ describe('Foreshadow Mock Responses', () => {
   });
 
   it('should contain mysterious or ominous elements', () => {
-    foreshadowMockResponses.forEach(response => {
+    foreshadowMockResponses.forEach((response) => {
       // Foreshadowing should be substantial
       expect(response.response.length).toBeGreaterThan(50);
     });

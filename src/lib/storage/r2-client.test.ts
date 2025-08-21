@@ -17,7 +17,7 @@ describe('R2 Storage Client', () => {
     process.env.R2_BUCKET_NAME = 'test-bucket';
 
     const config = getR2Config();
-    
+
     expect(config.accountId).toBeDefined();
     expect(config.accessKeyId).toBeDefined();
     expect(config.secretAccessKey).toBeDefined();

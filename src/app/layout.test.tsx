@@ -15,7 +15,7 @@ describe('Root Layout', () => {
         <div>Test Content</div>
       </RootLayout>
     );
-    
+
     expect(container.querySelector('[data-clerk-provider]')).toBeInTheDocument();
   });
 
@@ -25,7 +25,7 @@ describe('Root Layout', () => {
         <div>Test Child Content</div>
       </RootLayout>
     );
-    
+
     expect(getByText('Test Child Content')).toBeInTheDocument();
   });
 });

@@ -16,13 +16,13 @@ describe('Authentication Middleware', () => {
 
   it('should export configured authMiddleware', () => {
     const middleware = require('./middleware').default;
-    
+
     expect(mockAuthMiddleware).toHaveBeenCalled();
   });
 
   it('should configure public routes', () => {
     require('./middleware');
-    
+
     const config = mockAuthMiddleware.mock.calls[0][0];
     expect(config.publicRoutes).toContain('/');
     expect(config.publicRoutes).toContain('/sign-in');
@@ -31,7 +31,7 @@ describe('Authentication Middleware', () => {
 
   it('should configure afterAuth handler', () => {
     require('./middleware');
-    
+
     const config = mockAuthMiddleware.mock.calls[0][0];
     expect(config.afterAuth).toBeDefined();
     expect(typeof config.afterAuth).toBe('function');
@@ -39,25 +39,22 @@ describe('Authentication Middleware', () => {
 
   it('should handle unauthenticated access to protected routes', () => {
     require('./middleware');
-    
+
     const config = mockAuthMiddleware.mock.calls[0][0];
-    const mockReq = { 
+    const mockReq = {
       url: 'http://localhost:3000/dashboard',
-      nextUrl: { pathname: '/dashboard' }
+      nextUrl: { pathname: '/dashboard' },
     };
-    
+
     const mockRedirect = jest.fn();
     const Response = {
-      redirect: mockRedirect
+      redirect: mockRedirect,
     };
-    
+
     global.Response = Response as any;
-    
-    config.afterAuth(
-      { userId: null, isPublicRoute: false },
-      mockReq
-    );
-    
+
+    config.afterAuth({ userId: null, isPublicRoute: false }, mockReq);
+
     expect(mockRedirect).toHaveBeenCalled();
   });
 });

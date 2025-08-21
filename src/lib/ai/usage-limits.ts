@@ -6,14 +6,14 @@ export async function checkTokenLimit(
   dailyLimit: number
 ): Promise<boolean> {
   const currentUsage = await getDailyUsage(userId);
-  return (currentUsage + requestedTokens) <= dailyLimit;
+  return currentUsage + requestedTokens <= dailyLimit;
 }
 
 export async function getDailyUsage(userId: string): Promise<number> {
   // In production, query from database
   // const today = new Date();
   // today.setHours(0, 0, 0, 0);
-  // 
+  //
   // const usage = await prisma.tokenUsage.aggregate({
   //   where: {
   //     userId,
@@ -21,9 +21,9 @@ export async function getDailyUsage(userId: string): Promise<number> {
   //   },
   //   _sum: { totalTokens: true },
   // });
-  // 
+  //
   // return usage._sum.totalTokens || 0;
-  
+
   return 0; // Mock implementation
 }
 

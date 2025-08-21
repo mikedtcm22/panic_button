@@ -36,7 +36,7 @@ describe('Campaign Digest Mock Response', () => {
     const startTime = Date.now();
     const digest = await getMockDigest('test.md', true);
     const endTime = Date.now();
-    
+
     expect(endTime - startTime).toBeGreaterThanOrEqual(2000);
     expect(digest).toBeDefined();
   });

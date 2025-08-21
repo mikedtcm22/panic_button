@@ -13,11 +13,11 @@ describe('Database Configuration', () => {
     process.env.DATABASE_AUTH_TOKEN = 'test-auth-token';
 
     const config = getDatabaseConfig();
-    
+
     expect(config.databaseUrl).toBeDefined();
     expect(config.authToken).toBeDefined();
   });
-  
+
   it('should throw error when environment variables are missing', () => {
     process.env.DATABASE_URL = '';
     expect(() => getDatabaseConfig()).toThrow('Missing database configuration');

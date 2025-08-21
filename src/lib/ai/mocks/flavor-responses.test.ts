@@ -7,7 +7,7 @@ describe('Flavor Mock Responses', () => {
   });
 
   it('should have proper structure for each flavor response', () => {
-    flavorMockResponses.forEach(response => {
+    flavorMockResponses.forEach((response) => {
       expect(response).toHaveProperty('id');
       expect(response).toHaveProperty('location');
       expect(response).toHaveProperty('response');
@@ -15,7 +15,7 @@ describe('Flavor Mock Responses', () => {
   });
 
   it('should contain atmospheric descriptions', () => {
-    flavorMockResponses.forEach(response => {
+    flavorMockResponses.forEach((response) => {
       // Flavor text should be descriptive and longer
       expect(response.response.length).toBeGreaterThan(100);
     });

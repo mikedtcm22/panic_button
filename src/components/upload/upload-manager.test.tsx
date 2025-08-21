@@ -17,15 +17,15 @@ describe('Upload Manager', () => {
     render(<UploadManager />);
     expect(screen.getByTestId('dropzone')).toBeInTheDocument();
   });
-  
+
   it('should display upload items when files are selected', async () => {
     render(<UploadManager />);
-    
+
     const file = new File(['content'], 'test.pdf', { type: 'application/pdf' });
     const input = screen.getByTestId('file-input');
-    
+
     fireEvent.change(input, { target: { files: [file] } });
-    
+
     await waitFor(() => {
       expect(screen.getByText('test.pdf')).toBeInTheDocument();
     });

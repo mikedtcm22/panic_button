@@ -7,7 +7,7 @@ describe('Plot Mock Responses', () => {
   });
 
   it('should have proper structure for each plot response', () => {
-    plotMockResponses.forEach(response => {
+    plotMockResponses.forEach((response) => {
       expect(response).toHaveProperty('id');
       expect(response).toHaveProperty('response');
       expect(typeof response.id).toBe('string');
@@ -16,7 +16,7 @@ describe('Plot Mock Responses', () => {
   });
 
   it('should contain plot redirection elements', () => {
-    plotMockResponses.forEach(response => {
+    plotMockResponses.forEach((response) => {
       const text = response.response;
       // Should contain bold titles
       expect(text).toContain('**');

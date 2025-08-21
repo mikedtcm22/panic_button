@@ -29,7 +29,7 @@ describe('OpenAI Client', () => {
     const client = createOpenAIClient();
     expect(client).toBeDefined();
   });
-  
+
   it('should generate text using the client', async () => {
     const response = await generateText('Test prompt');
     expect(response.choices[0].message.content).toBe('Test response');

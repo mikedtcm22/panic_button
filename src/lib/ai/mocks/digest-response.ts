@@ -48,22 +48,25 @@ export const mockDigestSummary: MockDigestSummary = {
     npcsFound: 9,
     locationsFound: 6,
     factionsFound: 3,
-    plotHooksFound: 15
-  }
+    plotHooksFound: 15,
+  },
 };
 
-export function getMockDigest(filename: string, withDelay?: boolean): MockDigestSummary | Promise<MockDigestSummary> {
+export function getMockDigest(
+  filename: string,
+  withDelay?: boolean
+): MockDigestSummary | Promise<MockDigestSummary> {
   const digest = {
     ...mockDigestSummary,
-    uploadedFile: filename
+    uploadedFile: filename,
   };
-  
+
   if (withDelay) {
     // Simulate processing delay
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       setTimeout(() => resolve(digest), 3000);
     });
   }
-  
+
   return digest;
 }

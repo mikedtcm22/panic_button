@@ -20,17 +20,17 @@ export function MockProvider({ children }: { children: ReactNode }) {
   const mockUser: MockUser = {
     id: 'mock-user-1',
     email: 'dm@example.com',
-    name: 'Test DM'
+    name: 'Test DM',
   };
-  
+
   const signIn = async () => {
     console.log('Mock sign in');
   };
-  
+
   const signOut = async () => {
     console.log('Mock sign out');
   };
-  
+
   return (
     <MockContext.Provider value={{ user: mockUser, signIn, signOut }}>
       {children}
@@ -54,15 +54,19 @@ interface UploadResult {
 
 export function useMockStorage() {
   return {
-    uploadFile: async (file: { name: string; size: number; type: string }): Promise<UploadResult> => {
+    uploadFile: async (file: {
+      name: string;
+      size: number;
+      type: string;
+    }): Promise<UploadResult> => {
       // Simulate upload delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
       return {
         success: true,
         url: `mock://storage/${file.name}`,
-        id: `mock-file-${Date.now()}`
+        id: `mock-file-${Date.now()}`,
       };
-    }
+    },
   };
 }

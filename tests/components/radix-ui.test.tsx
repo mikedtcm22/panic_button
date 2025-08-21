@@ -6,7 +6,7 @@ describe('Radix UI Components', () => {
     render(<Button>Click me</Button>);
     expect(screen.getByRole('button')).toBeInTheDocument();
   });
-  
+
   it('should apply custom styling to Radix components', () => {
     render(<Button className="bg-panic-red">Panic!</Button>);
     const button = screen.getByRole('button');

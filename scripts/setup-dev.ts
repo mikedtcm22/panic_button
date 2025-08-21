@@ -22,12 +22,12 @@ function formatConfigStatus(config: ReturnType<typeof checkEnvironment>): string
     `  Database: ${config.database.configured ? '✓' : '✗'} ${config.database.message}`,
     '',
   ];
-  
+
   if (!config.clerk.configured) lines.push(`    → ${config.clerk.instructions}`);
   if (!config.openai.configured) lines.push(`    → ${config.openai.instructions}`);
   if (!config.r2.configured) lines.push(`    → ${config.r2.instructions}`);
   if (!config.database.configured) lines.push(`    → ${config.database.instructions}`);
-  
+
   return lines.join('\n');
 }
 
@@ -35,12 +35,12 @@ export async function runSetupScript(): Promise<SetupResult> {
   const result: SetupResult = {
     envFileCreated: false,
     databaseInitialized: false,
-    status: ''
+    status: '',
   };
-  
+
   const envPath = path.join(process.cwd(), '.env.local');
   const dbPath = path.join(process.cwd(), 'prisma', 'dev.db');
-  
+
   // Create .env.local if missing
   if (!fs.existsSync(envPath)) {
     const template = `# Development Configuration
@@ -61,7 +61,7 @@ DATABASE_URL=file:./dev.db
   } else {
     console.log('✓ .env.local already exists');
   }
-  
+
   // Initialize database
   if (!fs.existsSync(dbPath)) {
     try {
@@ -82,21 +82,23 @@ DATABASE_URL=file:./dev.db
   } else {
     console.log('✓ Database already exists');
   }
-  
+
   // Check configuration
   const config = checkEnvironment();
   result.status = formatConfigStatus(config);
   console.log('\n' + result.status);
-  
+
   return result;
 }
 
 // Run if called directly
 if (require.main === module) {
-  runSetupScript().then(() => {
-    console.log('\n✓ Setup complete! Run "npm run dev" to start the development server.');
-  }).catch(error => {
-    console.error('Setup failed:', error);
-    process.exit(1);
-  });
+  runSetupScript()
+    .then(() => {
+      console.log('\n✓ Setup complete! Run "npm run dev" to start the development server.');
+    })
+    .catch((error) => {
+      console.error('Setup failed:', error);
+      process.exit(1);
+    });
 }

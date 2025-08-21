@@ -17,7 +17,7 @@ describe('Clerk Configuration', () => {
     process.env.CLERK_SECRET_KEY = 'sk_test_456';
 
     const config = getClerkConfig();
-    
+
     expect(config.publishableKey).toBe('pk_test_123');
     expect(config.secretKey).toBe('sk_test_456');
   });
