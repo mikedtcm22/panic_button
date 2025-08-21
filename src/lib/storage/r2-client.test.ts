@@ -1,4 +1,4 @@
-import { getR2Config } from './r2-client';
+import { getR2Config, createR2Client } from './r2-client';
 
 describe('R2 Storage Client', () => {
   beforeEach(() => {
@@ -26,5 +26,24 @@ describe('R2 Storage Client', () => {
 
   it('should throw error when environment variables are missing', () => {
     expect(() => getR2Config()).toThrow('Missing Cloudflare R2 environment variables');
+  });
+});
+
+describe('R2 S3 Client', () => {
+  beforeEach(() => {
+    // Set up environment variables for client tests
+    process.env.CLOUDFLARE_ACCOUNT_ID = 'test-account-id';
+    process.env.R2_ACCESS_KEY_ID = 'test-access-key';
+    process.env.R2_SECRET_ACCESS_KEY = 'test-secret-key';
+    process.env.R2_BUCKET_NAME = 'test-bucket';
+  });
+
+  it('should create S3 client with R2 endpoint', async () => {
+    const client = createR2Client();
+    expect(client).toBeDefined();
+    expect(client.config.endpoint).toBeDefined();
+    // Check that endpoint was configured properly
+    const endpointProvider = await client.config.endpoint();
+    expect(endpointProvider.hostname).toContain('r2.cloudflarestorage.com');
   });
 });

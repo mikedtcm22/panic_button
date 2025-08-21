@@ -1,3 +1,5 @@
+import { S3Client } from '@aws-sdk/client-s3';
+
 export function getR2Config() {
   const accountId = process.env.CLOUDFLARE_ACCOUNT_ID;
   const accessKeyId = process.env.R2_ACCESS_KEY_ID;
@@ -9,4 +11,17 @@ export function getR2Config() {
   }
   
   return { accountId, accessKeyId, secretAccessKey, bucketName };
+}
+
+export function createR2Client() {
+  const config = getR2Config();
+  
+  return new S3Client({
+    region: 'auto',
+    endpoint: `https://${config.accountId}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: config.accessKeyId,
+      secretAccessKey: config.secretAccessKey,
+    },
+  });
 }
