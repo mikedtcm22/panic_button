@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 import { generateSetupGuide } from '../src/lib/docs/setup-guide';
 
 export async function generateReadme(): Promise<void> {

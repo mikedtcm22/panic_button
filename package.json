@@ -11,7 +11,8 @@
     "test:coverage": "jest --coverage",
     "type-check": "tsc --noEmit",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "setup:dev": "npx tsc scripts/setup-dev.ts scripts/generate-readme.ts --outDir .tmp --module commonjs --target es2020 --esModuleInterop && node .tmp/scripts/setup-dev.js && node .tmp/scripts/generate-readme.js && rm -rf .tmp"
   },
   "repository": {
     "type": "git",
