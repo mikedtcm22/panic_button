@@ -1,13 +1,10 @@
-// Stub database module - will be replaced with Prisma later
-export const prisma = {
-  file: {
-    create: async (data: any) => {
-      // This is a stub implementation for testing
-      return {
-        id: 'file_' + Date.now(),
-        ...data.data,
-        createdAt: new Date(),
-      };
-    },
-  },
+import { PrismaClient } from '@prisma/client';
+
+// Create singleton instance
+const globalForPrisma = globalThis as unknown as {
+  prisma: PrismaClient | undefined;
 };
+
+export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;

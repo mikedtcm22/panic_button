@@ -1,4 +1,4 @@
-import { prisma } from '@/lib/database';
+import { createFile } from '@/lib/database/models/file';
 
 interface FileMetadata {
   userId: string;
@@ -6,16 +6,16 @@ interface FileMetadata {
   fileType: string;
   fileSize: number;
   storageKey: string;
+  campaignId?: string;
 }
 
 export async function saveFileMetadata(metadata: FileMetadata) {
-  return await prisma.file.create({
-    data: {
-      userId: metadata.userId,
-      fileName: metadata.fileName,
-      fileType: metadata.fileType,
-      fileSize: metadata.fileSize,
-      storageKey: metadata.storageKey,
-    },
+  return await createFile({
+    userId: metadata.userId,
+    fileName: metadata.fileName,
+    fileType: metadata.fileType,
+    fileSize: metadata.fileSize,
+    storageKey: metadata.storageKey,
+    campaignId: metadata.campaignId,
   });
 }
