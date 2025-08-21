@@ -21,7 +21,10 @@
       "Bash(npm run format:check:*)",
       "Bash(npm run format:*)",
       "Bash(npm run lint)",
-      "Bash(npm run type-check:*)"
+      "Bash(npm run type-check:*)",
+      "Bash(git push:*)",
+      "Bash(npm ls:*)",
+      "Bash(npm uninstall:*)"
     ],
     "deny": [],
     "ask": []
