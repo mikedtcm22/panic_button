@@ -99,9 +99,7 @@ export default function DemoPage() {
 
         {loading && <LoadingSpinner text="Generating..." />}
 
-        {message && !loading && (
-          <div className="mb-2 text-sm text-green-600">{message}</div>
-        )}
+        {message && !loading && <div className="mb-2 text-sm text-green-600">{message}</div>}
 
         {response && !loading && (
           <div className="mt-4 rounded bg-amber-50 p-4">

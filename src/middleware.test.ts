@@ -41,11 +41,7 @@ describe('Authentication Middleware', () => {
   it('should create route matcher for public routes', () => {
     require('./middleware');
 
-    expect(mockCreateRouteMatcher).toHaveBeenCalledWith([
-      '/',
-      '/sign-in(.*)',
-      '/sign-up(.*)',
-    ]);
+    expect(mockCreateRouteMatcher).toHaveBeenCalledWith(['/', '/sign-in(.*)', '/sign-up(.*)']);
   });
 
   it('should handle authenticated requests', async () => {

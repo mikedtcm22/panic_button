@@ -15,7 +15,7 @@ describeFunc('Development Setup Script', () => {
     if (!fs.existsSync(prismaDir)) {
       fs.mkdirSync(prismaDir, { recursive: true });
     }
-    
+
     // Backup existing files if they exist
     if (fs.existsSync(envPath)) {
       fs.renameSync(envPath, `${envPath}.backup`);
