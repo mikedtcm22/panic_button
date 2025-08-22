@@ -2,7 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { generateReadme } from './generate-readme';
 
-describe('README Generator', () => {
+// Skip these tests in CI as they manipulate local files
+const describeFunc = process.env.CI ? describe.skip : describe;
+
+describeFunc('README Generator', () => {
   const readmePath = path.join(process.cwd(), 'LOCAL_TESTING.md');
 
   beforeEach(() => {

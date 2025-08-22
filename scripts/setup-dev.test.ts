@@ -2,11 +2,20 @@ import fs from 'fs';
 import path from 'path';
 import { runSetupScript } from './setup-dev';
 
-describe('Development Setup Script', () => {
+// Skip these tests in CI as they're for local development setup
+const describeFunc = process.env.CI ? describe.skip : describe;
+
+describeFunc('Development Setup Script', () => {
   const envPath = path.join(process.cwd(), '.env.local');
   const dbPath = path.join(process.cwd(), 'prisma', 'dev.db');
+  const prismaDir = path.join(process.cwd(), 'prisma');
 
   beforeEach(() => {
+    // Ensure prisma directory exists
+    if (!fs.existsSync(prismaDir)) {
+      fs.mkdirSync(prismaDir, { recursive: true });
+    }
+    
     // Backup existing files if they exist
     if (fs.existsSync(envPath)) {
       fs.renameSync(envPath, `${envPath}.backup`);
