@@ -3,32 +3,24 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { LoadingSpinner, Skeleton } from '@/components/ui/loading';
-import { useToast } from '@/hooks/use-toast';
 import { checkEnvironment } from '@/lib/config/env-check';
 import { generateMockResponse, PanicType } from '@/lib/mock/mock-ai';
 
 export default function DemoPage() {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState('');
-  const { showToast } = useToast();
+  const [message, setMessage] = useState('');
   const config = checkEnvironment();
 
   const handlePanicButton = async (type: PanicType) => {
     setLoading(true);
+    setMessage('');
     try {
       const result = await generateMockResponse(type);
       setResponse(result.content);
-      showToast({
-        title: 'Generated!',
-        description: `Used ${result.tokens} tokens`,
-        variant: 'success',
-      });
+      setMessage(`Generated! Used ${result.tokens} tokens`);
     } catch (error) {
-      showToast({
-        title: 'Error',
-        description: 'Failed to generate response',
-        variant: 'error',
-      });
+      setMessage('Failed to generate response');
     } finally {
       setLoading(false);
     }
@@ -106,6 +98,10 @@ export default function DemoPage() {
         </div>
 
         {loading && <LoadingSpinner text="Generating..." />}
+
+        {message && !loading && (
+          <div className="mb-2 text-sm text-green-600">{message}</div>
+        )}
 
         {response && !loading && (
           <div className="mt-4 rounded bg-amber-50 p-4">

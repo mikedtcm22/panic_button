@@ -25,11 +25,7 @@ jest.mock('@/lib/mock/mock-ai', () => ({
   ),
 }));
 
-jest.mock('@/hooks/use-toast', () => ({
-  useToast: () => ({
-    showToast: jest.fn(),
-  }),
-}));
+// No need to mock useToast anymore as it's been removed from the component
 
 describe('Demo Dashboard', () => {
   it('should display all UI components showcase', () => {

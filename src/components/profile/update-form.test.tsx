@@ -6,12 +6,12 @@ import { ProfileUpdateForm } from './update-form';
 const mockUpdate = jest.fn();
 const mockUser = {
   firstName: 'John',
+  update: jest.fn(),
 };
 
 jest.mock('@clerk/nextjs', () => ({
   useUser: () => ({
     user: mockUser,
-    update: mockUpdate,
   }),
 }));
 
@@ -38,7 +38,7 @@ describe('Profile Update Form', () => {
     await user.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => {
-      expect(mockUpdate).toHaveBeenCalledWith({
+      expect(mockUser.update).toHaveBeenCalledWith({
         firstName: 'Jane',
       });
     });
@@ -54,7 +54,7 @@ describe('Profile Update Form', () => {
     await user.click(screen.getByRole('button', { name: /save/i }));
 
     await waitFor(() => {
-      expect(mockUpdate).toHaveBeenCalledWith({
+      expect(mockUser.update).toHaveBeenCalledWith({
         firstName: '',
       });
     });

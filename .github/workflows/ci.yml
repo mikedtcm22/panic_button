@@ -62,8 +62,8 @@ jobs:
     env:
       DATABASE_URL: file:./test.db
       NEXT_PUBLIC_MOCK_MODE: true
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_mock
-      CLERK_SECRET_KEY: sk_test_mock
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_Y2xlcmsuY2xlcmsuZGV2JA
+      CLERK_SECRET_KEY: sk_test_1234567890abcdefghijklmnop
       OPENAI_API_KEY: sk-mock-key
       CLOUDFLARE_R2_ACCESS_KEY_ID: mock-access-key
       CLOUDFLARE_R2_SECRET_ACCESS_KEY: mock-secret-key
@@ -119,8 +119,8 @@ jobs:
     env:
       NEXT_PUBLIC_MOCK_MODE: true
       DATABASE_URL: file:./build.db
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_build
-      CLERK_SECRET_KEY: sk_test_build
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_Y2xlcmsuY2xlcmsuZGV2JA
+      CLERK_SECRET_KEY: sk_test_1234567890abcdefghijklmnop
       NEXT_PUBLIC_APP_URL: http://localhost:3000
 
     steps:
@@ -194,8 +194,8 @@ jobs:
     env:
       NEXT_PUBLIC_MOCK_MODE: true
       DATABASE_URL: file:./lighthouse.db
-      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_lighthouse
-      CLERK_SECRET_KEY: sk_test_lighthouse
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_Y2xlcmsuY2xlcmsuZGV2JA
+      CLERK_SECRET_KEY: sk_test_1234567890abcdefghijklmnop
       NEXT_PUBLIC_APP_URL: http://localhost:3000
 
     steps:

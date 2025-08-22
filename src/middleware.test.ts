@@ -2,10 +2,28 @@
  * @jest-environment node
  */
 
-const mockAuthMiddleware = jest.fn((config) => config);
+const mockClerkMiddleware = jest.fn((handler) => handler);
+const mockCreateRouteMatcher = jest.fn((routes) => {
+  return (req: any) => {
+    const pathname = req.nextUrl?.pathname || req.url;
+    return routes.some((route: string) => {
+      const pattern = route.replace('(.*)', '.*');
+      const regex = new RegExp(`^${pattern}$`);
+      return regex.test(pathname);
+    });
+  };
+});
 
-jest.mock('@clerk/nextjs', () => ({
-  authMiddleware: mockAuthMiddleware,
+jest.mock('@clerk/nextjs/server', () => ({
+  clerkMiddleware: mockClerkMiddleware,
+  createRouteMatcher: mockCreateRouteMatcher,
+}));
+
+jest.mock('next/server', () => ({
+  NextResponse: {
+    next: jest.fn(() => 'next-response'),
+    redirect: jest.fn((url) => ({ url, status: 307 })),
+  },
 }));
 
 describe('Authentication Middleware', () => {
@@ -14,47 +32,51 @@ describe('Authentication Middleware', () => {
     jest.resetModules();
   });
 
-  it('should export configured authMiddleware', () => {
+  it('should export configured clerkMiddleware', () => {
     const middleware = require('./middleware').default;
 
-    expect(mockAuthMiddleware).toHaveBeenCalled();
+    expect(mockClerkMiddleware).toHaveBeenCalled();
   });
 
-  it('should configure public routes', () => {
+  it('should create route matcher for public routes', () => {
     require('./middleware');
 
-    const config = mockAuthMiddleware.mock.calls[0][0];
-    expect(config.publicRoutes).toContain('/');
-    expect(config.publicRoutes).toContain('/sign-in');
-    expect(config.publicRoutes).toContain('/sign-up');
+    expect(mockCreateRouteMatcher).toHaveBeenCalledWith([
+      '/',
+      '/sign-in(.*)',
+      '/sign-up(.*)',
+    ]);
   });
 
-  it('should configure afterAuth handler', () => {
-    require('./middleware');
+  it('should handle authenticated requests', async () => {
+    const { NextResponse } = require('next/server');
+    const middleware = require('./middleware').default;
 
-    const config = mockAuthMiddleware.mock.calls[0][0];
-    expect(config.afterAuth).toBeDefined();
-    expect(typeof config.afterAuth).toBe('function');
-  });
-
-  it('should handle unauthenticated access to protected routes', () => {
-    require('./middleware');
-
-    const config = mockAuthMiddleware.mock.calls[0][0];
+    const mockAuth = jest.fn().mockResolvedValue({ userId: 'user-123' });
     const mockReq = {
       url: 'http://localhost:3000/dashboard',
       nextUrl: { pathname: '/dashboard' },
     };
 
-    const mockRedirect = jest.fn();
-    const Response = {
-      redirect: mockRedirect,
+    const handler = mockClerkMiddleware.mock.calls[0][0];
+    const result = await handler(mockAuth, mockReq);
+
+    expect(NextResponse.next).toHaveBeenCalled();
+  });
+
+  it('should redirect unauthenticated users to sign-in', async () => {
+    const { NextResponse } = require('next/server');
+    const middleware = require('./middleware').default;
+
+    const mockAuth = jest.fn().mockResolvedValue({ userId: null });
+    const mockReq = {
+      url: 'http://localhost:3000/dashboard',
+      nextUrl: { pathname: '/dashboard' },
     };
 
-    global.Response = Response as any;
+    const handler = mockClerkMiddleware.mock.calls[0][0];
+    const result = await handler(mockAuth, mockReq);
 
-    config.afterAuth({ userId: null, isPublicRoute: false }, mockReq);
-
-    expect(mockRedirect).toHaveBeenCalled();
+    expect(NextResponse.redirect).toHaveBeenCalled();
   });
 });

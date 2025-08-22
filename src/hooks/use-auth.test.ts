@@ -4,9 +4,11 @@ import { useAuthStore } from '@/stores/auth-store';
 
 const mockSignOut = jest.fn();
 const mockClerkAuth = jest.fn();
+const mockUseUser = jest.fn();
 
 jest.mock('@clerk/nextjs', () => ({
   useAuth: () => mockClerkAuth(),
+  useUser: () => mockUseUser(),
 }));
 
 jest.mock('@/stores/auth-store');
@@ -35,6 +37,9 @@ describe('useAuth Hook', () => {
     mockClerkAuth.mockReturnValue({
       userId: 'user_123',
       signOut: mockSignOut,
+    });
+
+    mockUseUser.mockReturnValue({
       user: {
         primaryEmailAddress: { emailAddress: 'test@example.com' },
       },
@@ -62,6 +67,9 @@ describe('useAuth Hook', () => {
     mockClerkAuth.mockReturnValue({
       userId: 'user_123',
       signOut: mockSignOut,
+    });
+
+    mockUseUser.mockReturnValue({
       user: {
         primaryEmailAddress: { emailAddress: 'test@example.com' },
       },
@@ -89,6 +97,9 @@ describe('useAuth Hook', () => {
     mockClerkAuth.mockReturnValue({
       userId: null,
       signOut: mockSignOut,
+    });
+
+    mockUseUser.mockReturnValue({
       user: null,
     });
 
@@ -111,6 +122,9 @@ describe('useAuth Hook', () => {
     mockClerkAuth.mockReturnValue({
       userId: 'user_123',
       signOut: mockSignOut,
+    });
+
+    mockUseUser.mockReturnValue({
       user: {
         primaryEmailAddress: { emailAddress: 'test@example.com' },
       },

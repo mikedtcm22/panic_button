@@ -24,7 +24,10 @@
       "Bash(npm run type-check:*)",
       "Bash(git push:*)",
       "Bash(npm ls:*)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npm run build:*)",
+      "Bash(NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_build CLERK_SECRET_KEY=sk_test_build NEXT_PUBLIC_MOCK_MODE=true npm run build)",
+      "Bash(NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_Y2xlcmsuY2xlcmsuZGV2JA CLERK_SECRET_KEY=sk_test_1234567890abcdefghijklmnop NEXT_PUBLIC_MOCK_MODE=true npm run build)"
     ],
     "deny": [],
     "ask": []
