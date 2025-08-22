@@ -4,12 +4,13 @@ import { useUser } from '@clerk/nextjs';
 import { useState } from 'react';
 
 export function ProfileUpdateForm() {
-  const { user, update } = useUser();
+  const { user } = useUser();
   const [firstName, setFirstName] = useState(user?.firstName || '');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await update({ firstName });
+    // Update user profile through Clerk API
+    await user?.update({ firstName });
   };
 
   return (

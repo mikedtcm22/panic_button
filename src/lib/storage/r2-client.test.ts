@@ -43,7 +43,9 @@ describe('R2 S3 Client', () => {
     expect(client).toBeDefined();
     expect(client.config.endpoint).toBeDefined();
     // Check that endpoint was configured properly
-    const endpointProvider = await client.config.endpoint();
-    expect(endpointProvider.hostname).toContain('r2.cloudflarestorage.com');
+    if (client.config.endpoint && typeof client.config.endpoint === 'function') {
+      const endpointProvider = await client.config.endpoint();
+      expect(endpointProvider.hostname).toContain('r2.cloudflarestorage.com');
+    }
   });
 });

@@ -1,11 +1,12 @@
 'use client';
 
-import { useAuth as useClerkAuth } from '@clerk/nextjs';
+import { useAuth as useClerkAuth, useUser } from '@clerk/nextjs';
 import { useAuthStore } from '@/stores/auth-store';
 import { useEffect } from 'react';
 
 export function useAuth() {
-  const { userId, signOut, user: clerkUser } = useClerkAuth();
+  const { userId, signOut } = useClerkAuth();
+  const { user: clerkUser } = useUser();
   const { user, setUser, clearUser } = useAuthStore();
 
   useEffect(() => {

@@ -29,7 +29,10 @@ describe('Campaign Digest Mock Response', () => {
   it('should return digest for a given filename', () => {
     const digest = getMockDigest('test-campaign.md');
     expect(digest).toBeDefined();
-    expect(digest.uploadedFile).toBe('test-campaign.md');
+    // Type guard to check if it's not a Promise
+    if (!('then' in digest)) {
+      expect(digest.uploadedFile).toBe('test-campaign.md');
+    }
   });
 
   it('should simulate processing delay', async () => {

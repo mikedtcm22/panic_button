@@ -1,9 +1,12 @@
-import { currentUser } from '@clerk/nextjs';
+import { auth, clerkClient } from '@clerk/nextjs/server';
 
 export default async function ProfilePage() {
-  const user = await currentUser();
+  const { userId } = await auth();
 
-  if (!user) return <div>Not authenticated</div>;
+  if (!userId) return <div>Not authenticated</div>;
+
+  const client = await clerkClient();
+  const user = await client.users.getUser(userId);
 
   return (
     <div>

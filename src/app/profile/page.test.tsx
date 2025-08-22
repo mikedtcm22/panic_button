@@ -1,14 +1,16 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-jest.mock('@clerk/nextjs', () => ({
-  currentUser: jest.fn(),
+jest.mock('@clerk/nextjs/server', () => ({
+  auth: jest.fn(),
+  clerkClient: jest.fn(),
 }));
 
 import ProfilePage from './page';
-import { currentUser } from '@clerk/nextjs';
+import { auth, clerkClient } from '@clerk/nextjs/server';
 
-const mockCurrentUser = currentUser as jest.Mock;
+const mockAuth = auth as unknown as jest.Mock;
+const mockClerkClient = clerkClient as unknown as jest.Mock;
 
 describe('Profile Page', () => {
   beforeEach(() => {
@@ -16,9 +18,14 @@ describe('Profile Page', () => {
   });
 
   it('should display user email and name', async () => {
-    mockCurrentUser.mockResolvedValue({
-      emailAddresses: [{ emailAddress: 'test@example.com' }],
-      firstName: 'John',
+    mockAuth.mockResolvedValue({ userId: 'user-123' });
+    mockClerkClient.mockResolvedValue({
+      users: {
+        getUser: jest.fn().mockResolvedValue({
+          emailAddresses: [{ emailAddress: 'test@example.com' }],
+          firstName: 'John',
+        }),
+      },
     });
 
     const Component = await ProfilePage();
@@ -29,9 +36,14 @@ describe('Profile Page', () => {
   });
 
   it('should display profile heading', async () => {
-    mockCurrentUser.mockResolvedValue({
-      emailAddresses: [{ emailAddress: 'test@example.com' }],
-      firstName: 'John',
+    mockAuth.mockResolvedValue({ userId: 'user-123' });
+    mockClerkClient.mockResolvedValue({
+      users: {
+        getUser: jest.fn().mockResolvedValue({
+          emailAddresses: [{ emailAddress: 'test@example.com' }],
+          firstName: 'John',
+        }),
+      },
     });
 
     const Component = await ProfilePage();
@@ -41,9 +53,14 @@ describe('Profile Page', () => {
   });
 
   it('should handle user without first name', async () => {
-    mockCurrentUser.mockResolvedValue({
-      emailAddresses: [{ emailAddress: 'test@example.com' }],
-      firstName: null,
+    mockAuth.mockResolvedValue({ userId: 'user-123' });
+    mockClerkClient.mockResolvedValue({
+      users: {
+        getUser: jest.fn().mockResolvedValue({
+          emailAddresses: [{ emailAddress: 'test@example.com' }],
+          firstName: null,
+        }),
+      },
     });
 
     const Component = await ProfilePage();
@@ -54,7 +71,7 @@ describe('Profile Page', () => {
   });
 
   it('should display not authenticated message when no user', async () => {
-    mockCurrentUser.mockResolvedValue(null);
+    mockAuth.mockResolvedValue({ userId: null });
 
     const Component = await ProfilePage();
     render(Component);
