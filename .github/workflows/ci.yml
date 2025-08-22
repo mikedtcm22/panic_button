@@ -98,7 +98,7 @@ jobs:
       - name: Setup test database
         run: |
           npx prisma generate
-          npx prisma db push --skip-seed
+          npx prisma db push
 
       - name: Run tests (shard ${{ matrix.shard }}/${{ strategy.job-total }})
         run: npm run test:ci -- --shard=${{ matrix.shard }}/${{ strategy.job-total }}
